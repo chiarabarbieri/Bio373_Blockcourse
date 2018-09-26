@@ -2,6 +2,7 @@
 title: "Excercise Bio373 - Human diversity and population structure"
 author: "chiara barbieri"
 date: "26/9/2018"
+output: rmarkdown::github_document
 ---
 
 ## A dataset of Human Diversity
