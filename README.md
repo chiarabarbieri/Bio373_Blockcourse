@@ -2,12 +2,7 @@
 title: "Excercise Bio373 - Human diversity and population structure"
 author: "chiara barbieri"
 date: "26/9/2018"
-output: html_document
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ## A dataset of Human Diversity
 
