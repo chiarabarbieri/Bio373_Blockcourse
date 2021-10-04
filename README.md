@@ -124,7 +124,6 @@ Each line of the MAP file describes a single marker and must contain exactly 4 c
      rs# or snp identifier
      Genetic distance (Centimorgans)
      Base-pair position (bp units)
-     
 ```     
 
 *.bim* for binary 
@@ -241,19 +240,22 @@ for (i in 1:nrow(infoo)){
 
 # Plot het values to map
 library("maps")
-map.world <- map_data(map="world")
+map.world <- map_data(map = "world")
 gg <- ggplot()
 gg <- gg + theme()
-gg <- gg + geom_map(data=map.world, 
-                    map=map.world, 
-                    aes(map_id=region), 
-                    fill="white", 
-                    colour="black", 
-                    size=0.15)
-gg <- gg + coord_quickmap(ylim=c(-30,40), xlim=c(0,50))
-gg + geom_point(data=infoo, aes(x=lon, y=lat, color=het), size=5 ) +
-  scale_color_gradient(low = "blue", high = "red") +
-  ggtitle("Intensity of homozygosity in each population")
+gg <- gg + geom_map(data = map.world, 
+                    map =  map.world, 
+                    aes(map_id = region), 
+                    fill = "white", 
+                    colour = "black", 
+                    size = 0.15)
+gg <- gg + coord_quickmap(ylim = c(-30,40), xlim = c(0,50))
+gg + geom_point(data = infoo, 
+                aes(x = lon, y = lat, color = het),
+                size = 5 ) +
+     scale_color_gradient(low = "blue", 
+                          high = "red") +
+     ggtitle("Intensity of homozygosity in each population")
 
 
 ```
@@ -284,7 +286,7 @@ gg <- ggplot(eigenvec,
              color=V1)) +
         geom_point() +
         labs(x = eigenval[1,],
-             y=eigenval[2,],
+             y = eigenval[2,],
              title = "PCA analysis dimension 1 vs. 2") +
         scale_color_manual(values = colorRampPalette(brewer.pal(12,  "Accent"))(12))
 
@@ -301,7 +303,7 @@ ___________________________
 
 Identifying ancestry components shared between individuals of a set of populations.
 
-ADMIXTURE is a software that works similarly to Structure, but with faster computation time. Download and manual from https://www.genetics.ucla.edu/software/admixture/. It takes plink format input files.
+ADMIXTURE is a software that works similarly to Structure, but with faster computation time. Download and manual from https://www.genetics.ucla.edu/software/admixture/. It takes `plink` format input files.
 
 
 
@@ -353,27 +355,33 @@ plot the distribution of values associated to each K in R.
 
 ```{r message=FALSE, warning = FALSE}
 
-read.table("CV.txt")->cv  
+# Import cross-validation values
+cv <- read.table("CV.txt")
 
-# set which one was the smallest and the largest K that you ran
-minK<-2
-maxK<-10
+# set the smallest and the largest K that you ran
+minK <- 2
+maxK <- 5
 
-ordine<-c()
+# create vector with values for the x-axis of our plot
+ordine <- c()
 for (k in minK:maxK){
-  ordine[k]<-paste("(K=",k,"):",sep="", collapse = "")
+  ordine[k] <- paste("(K=", k,"):", sep = "", collapse = "")
 }
 
 ordine <- ordine[!is.na(ordine)]
 
+# load plotting library
 library(ggplot2)
 
-p <- ggplot(cv, aes(x=V3, y=V4)) + 
-  geom_boxplot()+ 
-  ggtitle("values associated to each K")+
-  scale_x_discrete(limits=ordine)
+# plot cross-validation results
+
+p <- ggplot(cv, aes(x = V3, y = V4)) + 
+       geom_boxplot() + 
+       ggtitle("values associated to each K") +
+       scale_x_discrete(limits = ordine)
   
 p
+
 ```
 
 I previously run 5 iterations for each K and determined which of the 5 runs has the highest likelihood. This is to exclude the chance that some run did not perform correctly.
@@ -387,54 +395,72 @@ prepare to plot: information to plot on the admixture bars, from your external i
 
 
 ```
+# Import admixture info file
+MYINFO <- read.table("infoAdmixtureExercis.txt", header = T, as.is = T)
 
-MYINFO<-read.table("infoAdmixtureExercis.txt", header=T, as.is=T)
 
+pops <- table(MYINFO$population)
+namespop <- unique(MYINFO$population)
 
-table(MYINFO$population)->pops
-namespop<-unique(MYINFO$population)
-
-my.labels <- vector()   ## plotting pop labels instead of sample ids
+# plotting pop labels instead of sample ids
+my.labels <- vector()
 for (k in 1:length(namespop)){
-  paste("^",namespop[k],"$",sep="")->a
-  length(grep(a, MYINFO$population)) -> my.labels[k]
+  a <- paste("^", namespop[k], "$", sep = "")
+  my.labels[k] <- length(grep(a, MYINFO$population))
 }
 
-labels.coords<-vector()  ### where to plot pop labels
-labels.coords[1]<-my.labels[1]/2
-for (i in 1:(length(my.labels)-1)) {
-  labels.coords[i]+(my.labels[i]/2+my.labels[i+1]/2)->labels.coords[i+1]
+# where to plot pop labels
+labels.coords <- vector() 
+labels.coords[1] <- my.labels[1]/2
+for (i in 1:(length(my.labels) - 1)) {
+  labels.coords[i+1] <- labels.coords[i] + (my.labels[i] / 2 + my.labels[i+1] / 2)
 }
-z<-vector()
-z[1]<-my.labels[1]
-for (i in 1:(length(my.labels)-1)){
-  z[i]+my.labels[i+1]->z[i+1]
+z <- vector()
+z[1] <- my.labels[1]
+for (i in 1:(length(my.labels) - 1)){
+  z[i+1] <- z[i] + my.labels[i+1]
 }
 
 # select a color palette
-# you can use colorbrewer. put together a number of colours equal Kmax.
+# you can use colorbrewer
+# put together a number of colours equal Kmax in the following variable
+
+maxK <- 5
 
 library(RColorBrewer)
-qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual',]
-col_vector = unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
-colorchoice<-sample(col_vector, maxK)
-#pie(rep(1,maxK), col=coso)
+qual_col_pals <- brewer.pal.info[brewer.pal.info$category == 'qual',]
+col_vector <- unlist(mapply(brewer.pal, qual_col_pals$maxcolors, rownames(qual_col_pals)))
+colorchoice <- sample(col_vector, maxK)
 
 # now plot for each K
-K<-2 # chose the K to plot. Start with the lowest.
+K <- 2 # chose the K to plot. Start with the lowest.
 
-valuesToplot<-read.table(paste("K",K,".Run1.Q", sep="", collapse = ""))
+valuesToplot <- read.table(paste("K",K,".Run1.Q", sep = "", collapse = ""))
 
-valuesToplotSort<-valuesToplot[MYINFO$oderAdmix,]
+valuesToplotSort <- valuesToplot[MYINFO$oderAdmix,]
 
-#pdf(paste("AdmixtureForK",K,".pdf", sep="", collapse = ""),pointsize=8, height=3.5)
+#To output the plot as pdf, uncomment the next line and the last one
+#pdf(paste("AdmixtureForK",K,".pdf", sep = "", collapse = ""), pointsize=8, height=3.5)
 
-barplot(t(as.matrix(valuesToplotSort)), col=colorchoice[1:K], axisnames=F, axes=F, space=0,border=NA)
-axis(3, labels = FALSE, tick=F)
+barplot(t(as.matrix(valuesToplotSort)), 
+        col=colorchoice[1:K], 
+        axisnames=F, 
+        axes=F, 
+        space=0,
+        border=NA)
+axis(3, 
+     labels = FALSE, 
+     tick=F)
 for (i in c(0,z)){
-  lines(x=c(i,i),y=c(0,3), lwd=0.7, col="white")
+  lines(x = c(i,i), y = c(0,3), lwd = 0.7, col =  "white")
 }
-text(labels.coords, par("usr")[3] + 1.03 , srt = 45, adj = 0, labels = namespop, cex=0.7, xpd = TRUE)
+text(labels.coords, 
+     par("usr")[3] + 1.03 , 
+     srt = 45, 
+     adj = 0, 
+     labels = namespop, 
+     cex=0.7, 
+     xpd = TRUE)
 #dev.off()
 
 ```
