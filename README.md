@@ -1,9 +1,11 @@
 ---
 title: "Excercise Bio373 - Human diversity and population structure"
-author: "chiara barbieri"
+author: "Chiara Barbieri"
 date: "26/9/2018"
 output: rmarkdown::github_document
 ---
+
+*Reviewed and updated by Stefan Milosavljevic on 05.10.2021*
 
 ## Practical set up
 
@@ -472,5 +474,3 @@ text(labels.coords,
 
 
 Look at patterns across populations. Do they follow a geographic structure? Is there a sign of Admixture?
-
-... 
