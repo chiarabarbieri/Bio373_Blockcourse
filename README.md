@@ -166,9 +166,14 @@ Generate some simple summary statistics: rates of missing data in the file. Dive
 Use the flag --miss and explore the outputs. How is the rate of missing data per individual and per marker looking like?
 
 ```
-plink --bfile HumanDataHO --missing
+plink --bfile HumanDataHO --missing --out missing
 ```
 
+Before running the code below, you need to download `missing.imiss` from `fgcz-kl-003` with the command `scp` as follows (change what needs to be changed):
+
+```
+scp your_account@172.23.30.6:/scratch/bio373_2021/your_folder/Bio373_Blockcourse/missing.imiss /Users/your_username/path/to/Bio373_Blockcourse
+```
 
 ```{r echo=FALSE}
 
@@ -209,7 +214,7 @@ Now we run another `plink` command to explore F, the degree of consanguinity, an
 plink --bfile HumanDataHO --het
 ```
 
-Visualize the difference in heterozygosity within populations.
+Download `plink.het` and visualize the difference in heterozygosity within populations with the following R scripts.
 
 ```{r message=FALSE, warning = FALSE}
 # Import file with heterozigosity info
@@ -298,6 +303,9 @@ gg
 
 One group is clearly an outlier. Repeat the analysis after excluding this population.
 
+
+*Hint: there should be a flag to exclude families... and it might require creating a txt file with the name of the family to be excluded... Ask the internet!*
+
 ___________________________
 
 # ADMIXTURE analysis
@@ -332,7 +340,7 @@ Copy-paste the commands below in a file called `admixture_script.sh` (use `touch
 ```
 typeset -i run=0
 for K in 2 3 4 5; do  # select a meaningful series of K - the more Ks, the longer the run obviously
-admixture -s time --cv HumanDataHO_pruned.ped $K -j6 | tee log.K${K}.RUN1.out;
+admixture -s time --cv HumanDataHO_pruned.ped $K -j2 | tee log.K${K}.RUN1.out;
 mv HumanDataHO_pruned.$K.P K$K.Run1.P;
 mv HumanDataHO_pruned.$K.Q K$K.Run1.Q;
 done
@@ -474,3 +482,7 @@ text(labels.coords,
 
 
 Look at patterns across populations. Do they follow a geographic structure? Is there a sign of Admixture?
+
+
+If you managed to answer this last question, congratulations for finishing the practical! 
+`(◍•ᴗ•◍)❤`
