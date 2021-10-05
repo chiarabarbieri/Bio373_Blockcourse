@@ -48,7 +48,7 @@ You're ready to start now!
 
 ## A dataset of Human Diversity
 
-In this exercise we are going to work with a SNP dataset of different human populations. The purpose of these analysis is to understand human variation in terms of population history. We are choosing a SNP chip array designed by for maximizing information on human diversity and demographic events, named Human Origins (Affymetrix).
+In this exercise we are going to work with a SNP dataset of different human populations. The purpose of these analysis is to understand human variation in terms of population history. We are chosing a SNP chip array designed by for maximizing information on human diversity and demographic events, named Human Origins (Affymetrix).
 
 We will be working with PLINK, a software for data manipulation and basic statistics, and ADMIXTURE for reconstructing different ancestry across individuals.
 
@@ -163,7 +163,7 @@ Generate some simple summary statistics: rates of missing data in the file. Dive
 
 ### Missing data
 
-Use the flag --miss and explore the outputs. How is the rate of missing data per individual and per marker looking like?
+Use the flag --missing and explore the outputs. How is the rate of missing data per individual and per marker looking like?
 
 ```
 plink --bfile HumanDataHO --missing
@@ -332,7 +332,7 @@ Copy-paste the commands below in a file called `admixture_script.sh` (use `touch
 ```
 typeset -i run=0
 for K in 2 3 4 5; do  # select a meaningful series of K - the more Ks, the longer the run obviously
-admixture -s time --cv HumanDataHO_pruned.ped $K -j6 | tee log.K${K}.RUN1.out;
+admixture -s time --cv HumanDataHO_pruned.ped $K -j2 | tee log.K${K}.RUN1.out;
 mv HumanDataHO_pruned.$K.P K$K.Run1.P;
 mv HumanDataHO_pruned.$K.Q K$K.Run1.Q;
 done
@@ -474,3 +474,6 @@ text(labels.coords,
 
 
 Look at patterns across populations. Do they follow a geographic structure? Is there a sign of Admixture?
+
+If you managed to answer this last question, congratulations for finishing the practical! 
+`(◍•ᴗ•◍)❤`
