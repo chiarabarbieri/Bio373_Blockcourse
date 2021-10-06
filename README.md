@@ -166,7 +166,7 @@ Generate some simple summary statistics: rates of missing data in the file. Dive
 Use the flag --missing and explore the outputs. How is the rate of missing data per individual and per marker looking like?
 
 ```
-plink --bfile HumanDataHO --missing
+plink --bfile HumanDataHO --missing --out missing
 ```
 
 
