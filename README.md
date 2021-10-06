@@ -297,7 +297,12 @@ gg
 ```
 
 One group is clearly an outlier. Repeat the analysis after excluding this population.
+Copy the files in your LOCAL folder from the server
 
+```
+cd ~/Bio373_Blockcourse
+  $ scp your_BFabric_accout_name@172.23.30.6:/scratch/bio373_2021/your_name/Bio373_Blockcourse/plink.eigen* ./
+```
 ___________________________
 
 # ADMIXTURE analysis
