@@ -6,13 +6,16 @@ output: rmarkdown::github_document
 ---
 
 *Reviewed and updated by Stefan Milosavljevic on 05.10.2021*
+*Reviewed and updated by Chiara on 05.10.2022, for working on local computers*
+
 
 ## Practical set up
 
 For this practical you will be working with:
 
  - Your local RStudio
- - The remote server `fgcz-kl-003`
+ - The terminal of your computer
+ 
  
 Before starting, open RStudio and run the following command to install the packages we will need:
 
@@ -22,17 +25,7 @@ install.packages(c("maps", "ggrepel", "RColorBrewer", "colorRamps", "ggplot2"))
 
 ```
 
-After this, open your Terminal, login to `fgcz-kl-003` ([click here](https://gist.github.com/masaomi/999d1177c00116e61909220c1d40e32e) if you don't remember how to do it) and load the tools we will use as follows:
-
-```
-
-source /usr/local/ngseq/etc/lmod_profile
-module load Tools/PLINK/1.9beta6.21
-module load Tools/ADMIXTURE/1.3.0
-
-```
-
-If no errors happened, clone this repository both locally (i.e. on your Desktop mac or your laptop) and on your personal folder in `fgcz-kl-003` as follows:
+After this, open your Terminal, and clone this repository locally (i.e. on your Desktop mac or your laptop) as follows:
 
 ```
 git clone https://github.com/chiarabarbieri/Bio373_Blockcourse.git
@@ -482,3 +475,46 @@ Look at patterns across populations. Do they follow a geographic structure? Is t
 
 If you managed to answer this last question, congratulations for finishing the practical! 
 `(◍•ᴗ•◍)❤`
+
+
+
+### Version working on Server Remote, updated by Stefan for 2021 course
+
+
+## Practical set up
+
+For this practical you will be working with:
+
+ - Your local RStudio
+ - The remote server `fgcz-kl-003`
+ 
+Before starting, open RStudio and run the following command to install the packages we will need:
+
+```{r echo=FALSE, message=FALSE, warning = FALSE}
+
+install.packages(c("maps", "ggrepel", "RColorBrewer", "colorRamps", "ggplot2"))
+
+```
+
+After this, open your Terminal, login to `fgcz-kl-003` ([click here](https://gist.github.com/masaomi/999d1177c00116e61909220c1d40e32e) if you don't remember how to do it) and load the tools we will use as follows:
+
+```
+
+source /usr/local/ngseq/etc/lmod_profile
+module load Tools/PLINK/1.9beta6.21
+module load Tools/ADMIXTURE/1.3.0
+
+```
+
+If no errors happened, clone this repository both locally (i.e. on your Desktop mac or your laptop) and on your personal folder in `fgcz-kl-003` as follows:
+
+```
+git clone https://github.com/chiarabarbieri/Bio373_Blockcourse.git
+```
+
+As a last step, set the working directory in your RStudio to where you just cloned the repository. To do this on RStudio:
+
+  1) Click on "Files" in the bottom right window
+  2) Navigate to `Bio373_Blockcourse`
+  3) Once you're inside `Bio373_Blockcourse`, you can click on "More" in the upper part of the window (next to "New Folder", "Delete", "Rename") and then select "Set As Working Directory"
+
