@@ -303,7 +303,7 @@ ___________________________
 
 Identifying ancestry components shared between individuals of a set of populations.
 
-ADMIXTURE is a software that works similarly to Structure, but with faster computation time. Download and manual from https://www.genetics.ucla.edu/software/admixture/. It takes `plink` format input files.
+ADMIXTURE is a software that works similarly to Structure, but with faster computation time. Download http://dalexander.github.io/admixture/download.html and manual http://dalexander.github.io/admixture/admixture-manual.pdf. It takes `plink` format input files.
 
 
 
