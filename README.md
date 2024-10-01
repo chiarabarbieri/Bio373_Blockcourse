@@ -31,6 +31,15 @@ After this, open your Terminal, and clone this repository locally (i.e. on your 
 git clone https://github.com/chiarabarbieri/Bio373_Blockcourse.git
 ```
 
+
+Download plink https://www.cog-genomics.org/plink/1.9/ and ADMIXTURE https://dalexander.github.io/admixture/download.html. Note that ADMIXTURE does not run on Windows. Move the executable files of the software in the same folder where the exercise files are locate. 
+
+To run the software, from the terminal go to the folder and call plink as 
+
+```
+./plink 
+```
+
 As a last step, set the working directory in your RStudio to where you just cloned the repository. To do this on RStudio:
 
   1) Click on "Files" in the bottom right window
